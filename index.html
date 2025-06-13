@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prof. Sebastian Grobler - Regisseur & Dekan</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* Sticky Header */
+        .header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: #fff;
+            border-bottom: 1px solid #eee;
+            z-index: 1000;
+            padding: 1rem 2rem;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .brand {
+            font-weight: normal;
+            font-size: 1.1rem;
+            text-decoration: none;
+            color: #333;
+        }
+
+        .brand-subtitle {
+            font-size: 0.8rem;
+            color: #666;
+            font-weight: normal;
+            margin-top: 2px;
+        }
+
+        .nav {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav a {
+            text-decoration: none;
+            color: #333;
+            font-weight: normal;
+            transition: color 0.3s ease;
+        }
+
+        .nav a:hover {
+            color: #0066cc;
+        }
+
+        /* Main Content */
+        .main {
+            margin-top: 80px;
+        }
+
+        /* Banner Slider */
+        .banner {
+            width: 100%;
+            height: 60vh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .banner-slides {
+            display: flex;
+            width: 300%;
+            height: 100%;
+            transition: transform 0.5s ease;
+        }
+
+        .banner-slide {
+            width: 33.333%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .banner-slide:nth-child(1) {
+            background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
+        }
+
+        .banner-slide:nth-child(2) {
+            background: linear-gradient(135deg, #e8f4f8 0%, #d1e7dd 100%);
+        }
+
+        .banner-slide:nth-child(3) {
+            background: linear-gradient(135deg, #f8f4e8 0%, #ede7d1 100%);
+        }
+
+        .banner-placeholder {
+            width: 300px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.8);
+            border: 2px dashed #999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-style: italic;
+            border-radius: 8px;
+        }
+
+        .banner-dots {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+        }
+
+        .banner-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 255, 255, 0.8);
+        }
+
+        .banner-dot:hover,
+        .banner-dot.active {
+            background: rgba(255, 255, 255, 0.9);
+            transform: scale(1.2);
+        }
+
+        /* Sections */
+        .section {
+            padding: 3rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section:nth-child(even) {
+            background: #f9f9f9;
+        }
+
+        .section h2 {
+            font-weight: bold;
+            text-decoration: underline;
+            margin-bottom: 2rem;
+            font-size: 1.2rem;
+        }
+
+        .section h3 {
+            font-weight: bold;
+            text-decoration: underline;
+            margin: 1.5rem 0 0.5rem 0;
+            font-size: 1rem;
+        }
+
+        /* Bio Section */
+        .bio-content {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .bio-image {
+            width: 200px;
+            height: 250px;
+            background: #ddd;
+            border: 2px solid #ccc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-style: italic;
+            align-self: center;
+        }
+
+        .bio-text {
+            flex: 1;
+        }
+
+        .bio-text p {
+            margin-bottom: 1rem;
+        }
+
+        /* Works Section */
+        .works-list {
+            list-style: none;
+        }
+
+        .works-list li {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .works-list li:last-child {
+            border-bottom: none;
+        }
+
+        .work-title {
+            font-weight: bold;
+        }
+
+        .work-details {
+            color: #666;
+            font-size: 0.9rem;
+            margin-top: 0.25rem;
+        }
+
+        /* Contact Section */
+        .contact-content {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .contact-info {
+            flex: 1;
+        }
+
+        .contact-form {
+            margin-top: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.25rem;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-family: inherit;
+        }
+
+        .form-group textarea {
+            height: 120px;
+            resize: vertical;
+        }
+
+        .btn {
+            background: #0066cc;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: inherit;
+            transition: background 0.3s ease;
+        }
+
+        .btn:hover {
+            background: #0052a3;
+        }
+
+        .map-container {
+            flex: 1;
+            height: 300px;
+            background: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .map-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            filter: grayscale(100%) contrast(1.2);
+        }
+
+        /* Footer */
+        .footer {
+            background: #f5f5f5;
+            text-align: center;
+            padding: 2rem;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Mobile Navigation */
+        @media (max-width: 600px) {
+            .header {
+                padding: 1rem;
+            }
+
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav {
+                gap: 1rem;
+            }
+
+            .main {
+                margin-top: 120px;
+            }
+
+            .section {
+                padding: 2rem 1rem;
+            }
+
+            .banner {
+                height: 40vh;
+            }
+
+            .banner-placeholder {
+                width: 200px;
+                height: 150px;
+            }
+        }
+
+        /* Desktop Layout */
+        @media (min-width: 600px) {
+            .bio-content {
+                flex-direction: row;
+                align-items: flex-start;
+            }
+
+            .bio-image {
+                order: 2;
+                margin-left: 2rem;
+                align-self: flex-start;
+            }
+
+            .bio-text {
+                order: 1;
+            }
+
+            .contact-content {
+                flex-direction: row;
+            }
+
+            .banner {
+                height: 70vh;
+            }
+
+            .banner-placeholder {
+                width: 250px;
+                height: 180px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sticky Header -->
+    <header class="header">
+        <div class="header-content">
+            <a href="#home" class="brand">
+                <div>Sebastian Grobler</div>
+                <div class="brand-subtitle">Regisseur & Filmprofessor</div>
+            </a>
+            <nav class="nav">
+                <a href="#bio">Bio</a>
+                <a href="#works">Works</a>
+                <a href="#kontakt">Kontakt</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <!-- Landing Banner -->
+        <section id="home" class="banner">
+            <div class="banner-slides" id="bannerSlides">
+                <div class="banner-slide">
+                    <div class="banner-placeholder">
+                        Banner Bild 1
+                    </div>
+                </div>
+                <div class="banner-slide">
+                    <div class="banner-placeholder">
+                        Banner Bild 2
+                    </div>
+                </div>
+                <div class="banner-slide">
+                    <div class="banner-placeholder">
+                        Banner Bild 3
+                    </div>
+                </div>
+            </div>
+            <div class="banner-dots">
+                <div class="banner-dot active" onclick="showSlide(0)"></div>
+                <div class="banner-dot" onclick="showSlide(1)"></div>
+                <div class="banner-dot" onclick="showSlide(2)"></div>
+            </div>
+        </section>
+
+        <!-- Bio Section -->
+        <section id="bio" class="section">
+            <h2>Bio</h2>
+            <div class="bio-content">
+                <div class="bio-text">
+                    <p>Sebastian Grobler ist Prof. Dipl.-Regisseur und Dekan des Fachbereichs Medienproduktion an der Technischen Hochschule OWL. Als Hochschulprofessor, Regisseur und Produzent hat er seit 2005 neun Spielfilme und 80 TV-Serienfolgen inszeniert.</p>
+                    
+                    <p>Sein Debütfilm „Der ganz große Traum" (2011) wurde für die Lola nominiert und mit zehn internationalen Preisen ausgezeichnet. Seine Arbeit zeichnet sich durch eine besondere Sensibilität für menschliche Geschichten und visuelles Storytelling aus.</p>
+
+                    <h3>Lehre</h3>
+                    <p>Filmakademie Baden-Württemberg, Academy of Digital Media (ADM) Singapur, Technische Hochschule OWL</p>
+
+                    <h3>Publikationen</h3>
+                    <p>Aktuelle Publikation: Grobler, S. 2024</p>
+
+                    <h3>Mitgliedschaften</h3>
+                    <p>European Children's Film Association (ECFA), Bundesverband Regie (BVR), European Film Academy (EFA)</p>
+                </div>
+                <div class="bio-image">
+                    Profilbild Platzhalter
+                </div>
+            </div>
+        </section>
+
+        <!-- Works Section -->
+        <section id="works" class="section">
+            <h2>Works</h2>
+            <ul class="works-list">
+                <li>
+                    <div class="work-title">Der ganz große Traum</div>
+                    <div class="work-details">2011 • Spielfilm • Lola-nominiert • 10 internationale Preise</div>
+                </li>
+                <li>
+                    <div class="work-title">TV-Serienproduktionen</div>
+                    <div class="work-details">2005-2024 • 80 Folgen verschiedener Serien</div>
+                </li>
+                <li>
+                    <div class="work-title">Weitere Spielfilme</div>
+                    <div class="work-details">2005-2024 • 8 weitere Spielfilmproduktionen</div>
+                </li>
+                <li>
+                    <div class="work-title">Internationale Koproduktionen</div>
+                    <div class="work-details">Verschiedene Jahre • Projekte in Deutschland und international</div>
+                </li>
+            </ul>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="kontakt" class="section">
+            <h2>Kontakt</h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <p><strong>Prof. Sebastian Grobler</strong><br>
+                    Dekan Fachbereich Medienproduktion<br>
+                    Technische Hochschule OWL<br>
+                    Lemgo, Deutschland</p>
+
+                    <form class="contact-form" action="#" method="post">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">E-Mail</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Betreff</label>
+                            <input type="text" id="subject" name="subject">
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Nachricht</label>
+                            <textarea id="message" name="message" required></textarea>
+                        </div>
+                        <button type="submit" class="btn">Nachricht senden</button>
+                    </form>
+                </div>
+
+                <div class="map-container">
+                    <iframe class="map-iframe" 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2428.7654321!2d8.9000000!3d52.0300000!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNTLCsDAyJzAwLjAiTiA4wrA1NCcwMC4wIkU!5e0!3m2!1sde!2sde!4v1234567890"
+                            allowfullscreen="" 
+                            loading="lazy" 
+                            referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2024 Prof. Sebastian Grobler. Alle Rechte vorbehalten.</p>
+    </footer>
+</body>
+</html>
